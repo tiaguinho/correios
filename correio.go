@@ -1,13 +1,16 @@
 package correios
 
-const WEBSERVICE string = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx"
-
-var (
-	CodigoEmpresa string
-	Senha         string
+import (
+	"encoding/xml"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"strings"
 )
 
-type Consulta struct {
+const WEBSERVICE string = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx"
+
+type Params struct {
 	CodigoEmpresa    string  `xml:"nCdEmpresa"`
 	Senha            string  `xml:"sDsSenha"`
 	CodigoServico    string  `xml:"nCdServico"`
@@ -41,14 +44,49 @@ type Servicos struct {
 	cServico []Servico `xml:"cServico"`
 }
 
-func CalcPrecoPrazo() {
-
+//Calcula o preço e o prazo de entrega do item informado na interface
+func CalcPrecoPrazo(consulta Params) (Servicos, error) {
+	return doRequest("CalcPrecoPrazo", createQuery(consulta))
 }
 
-func CalcPreco() {
-
+//Calcla o preço da entrega
+func CalcPreco(consulta Params) (Servicos, error) {
+	return doRequest("CalcPreco", createQuery(consulta))
 }
 
-func CalcPrazo() {
+//Calcula somente o prazo de entrega
+func CalcPrazo(consulta Params) (Servicos, error) {
+	return doRequest("CalcPrazo", createQuery(consulta))
+}
 
+//Cria a query de consulta a partir da interface informada
+func createQuery(consulta Params) string {
+	var query []string
+	for key, value := range consulta {
+		query[len(query)] = key + "=" + string(value)
+	}
+
+	return strings.Join(query, "&")
+}
+
+//Faz a request para o webservice dos correios
+func doRequest(path, query string) (Servicos, error) {
+	resp, err := http.Get(WEBSERVICE + "/" + path + "?" + query)
+	if err != nil {
+		fmt.Println("Error: %v", err)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error: %v", err)
+	}
+
+	var results Servicos
+	err = xml.Unmarshal([]byte(body), &results)
+
+	if err != nil {
+		fmt.Println("Error: %v", err)
+	}
+
+	return results, err
 }
