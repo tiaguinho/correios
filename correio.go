@@ -32,13 +32,13 @@ type Params struct {
 type Servico struct {
 	Codigo                string `xml:"Codigo"`
 	Valor                 string `xml:"Valor"`
-	Prazo                 int    `xml:"PrazoEntrega"`
+	Prazo                 string `xml:"PrazoEntrega"`
 	ValorMaoPropria       string `xml:"ValorMaoPropria"`
 	ValorAvisoRecebimento string `xml:"ValorAvisoRecebimento"`
 	ValorDeclado          string `xml:"ValorValorDeclado"`
 	EntregaDomiciliar     string `xml:"EntregaDomiciliar"`
 	EntregaSabado         string `xml:"EntregaSabado"`
-	Erro                  int    `xml:"Erro"`
+	Erro                  string `xml:"Erro"`
 	MsgErro               string `xml:"MsgErro"`
 }
 
@@ -66,7 +66,7 @@ func CalcPrazo(consulta Params) ([]Servico, error) {
 func createQuery(consulta Params) string {
 	query_string, err := query.Values(consulta)
 	if err != nil {
-		fmt.Println("Error: %v", err)
+		fmt.Printf("Error: %v\n", err)
 	}
 
 	return query_string.Encode()
@@ -76,19 +76,19 @@ func createQuery(consulta Params) string {
 func doRequest(path, query_string string) ([]Servico, error) {
 	resp, err := http.Get(WEBSERVICE + "/" + path + "?" + query_string)
 	if err != nil {
-		fmt.Println("Error: %v", err)
+		fmt.Printf("Error: %v\n", err)
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Error: %v", err)
+		fmt.Printf("Error: %v\n", err)
 	}
 
 	var results Servicos
 	err = xml.Unmarshal(body, &results)
 
 	if err != nil {
-		fmt.Println("Error: %v", err)
+		fmt.Printf("Error: %v\n", err)
 	}
 
 	return results.Servico, err
