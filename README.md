@@ -5,6 +5,8 @@ Integração com webservice dos correios feito em Go.
 
 [![Build Status](https://travis-ci.org/tiaguinho/correios.svg?branch=master)](https://travis-ci.org/tiaguinho/correios)
 
+[![GoDoc](https://godoc.org/github.com/tiaguinho/correios?status.png)](https://godoc.org/github.com/tiaguinho/correios)
+
 Para entender melhor o funcionamento da integração com os correios, quais campos são obrigatórios e como eles devem ser preenchidos acesse o link a baixo:
 
 <http://www.correios.com.br/para-voce/correios-de-a-a-z/pdf/calculador-remoto-de-precos-e-prazos/manual-de-implementacao-do-calculo-remoto-de-precos-e-prazos>
