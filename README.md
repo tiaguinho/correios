@@ -6,7 +6,7 @@ Integração com webservice dos correios feito em Go.
 Instalação
 ----------
 
-.. code:: golang
+.. code:: bash
 	
 	go get github.com/tiaguinho/correios
 
@@ -15,8 +15,7 @@ Utilização
 
 Abaixo um exemplo de como utilizar o package dos correios
 
-.. code:: golang
-
+```
 	package main
 
 	import (
@@ -54,4 +53,4 @@ Abaixo um exemplo de como utilizar o package dos correios
 			fmt.Println("...")
 		}
 	}
-
+```
