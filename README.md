@@ -3,7 +3,7 @@ Correios
 
 Integração com webservice dos correios feito em Go.
 
-![alt tag](https://travis-ci.org/tiaguinho/correios.svg)
+[![Build Status](https://travis-ci.org/tiaguinho/correios.svg?branch=master)](https://travis-ci.org/tiaguinho/correios)
 
 Para entender melhor o funcionamento da integração com os correios, quais campos são obrigatórios e como eles devem ser preenchidos acesse o link a baixo:
 
