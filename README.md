@@ -3,19 +3,38 @@ Correios
 
 Integração com webservice dos correios feito em Go.
 
-Instalação
-----------
+## Instalação ##
 
-.. code:: bash
-	
+```bash
 	go get github.com/tiaguinho/correios
+```
+Struct da consulta
+------------------
 
-Utilização
-----------
+```go
+	type Params struct {
+		CodigoEmpresa    string  `url:"nCdEmpresa"`
+		Senha            string  `url:"sDsSenha"`
+		CodigoServico    string  `url:"nCdServico"`
+		CepOrigem        string  `url:"sCepOrigem"`
+		CepDestino       string  `url:"sCepDestino"`
+		Peso             string  `url:"nVlPeso"`
+		CodigoFormato    int     `url:"nCdFormato"`
+		Comprimento      float64 `url:"nVlComprimento"`
+		Altura           float64 `url:"nVlAltura"`
+		Largura          float64 `url:"nVlLargura"`
+		Diametro         float64 `url:"nVlDiametro"`
+		MaoPropria       string  `url:"sCdMaoPropria"`
+		ValorDeclarado   float64 `url:"nVlValorDeclarado"`
+		AvisoRecebimento string  `url:"sCdAvisoRecebimento"`
+	}
+```
+
+## Utilização ##
 
 Abaixo um exemplo de como utilizar o package dos correios
 
-```
+```go
 	package main
 
 	import (
