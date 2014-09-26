@@ -3,9 +3,7 @@ Correios
 
 Integração com webservice dos correios feito em Go.
 
-[![Build Status](https://travis-ci.org/tiaguinho/correios.svg?branch=master)](https://travis-ci.org/tiaguinho/correios)
-
-[![GoDoc](https://godoc.org/github.com/tiaguinho/correios?status.png)](https://godoc.org/github.com/tiaguinho/correios)
+[![Build Status](https://travis-ci.org/tiaguinho/correios.svg?branch=master)](https://travis-ci.org/tiaguinho/correios) [![GoDoc](https://godoc.org/github.com/tiaguinho/correios?status.png)](https://godoc.org/github.com/tiaguinho/correios)
 
 Para entender melhor o funcionamento da integração com os correios, quais campos são obrigatórios e como eles devem ser preenchidos acesse o link a baixo:
 
@@ -13,7 +11,7 @@ Para entender melhor o funcionamento da integração com os correios, quais camp
 
 ## Instalação ##
 
-```bash
+```go
 go get github.com/tiaguinho/correios
 ```
 Struct da consulta
@@ -83,3 +81,7 @@ func main() {
 	}
 }
 ```
+
+## Licença ##
+
+[The MIT License (MIT) Copyright (c) 2013 xuyu](http://opensource.org/licenses/MIT)
