@@ -84,4 +84,4 @@ func main() {
 
 ## Licença ##
 
-[The MIT License (MIT) Copyright (c) 2013 xuyu](http://opensource.org/licenses/MIT)
+[The MIT License (MIT) Copyright (c) 2013](http://opensource.org/licenses/MIT)
