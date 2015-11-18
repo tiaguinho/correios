@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/google/go-querystring/query"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -78,15 +77,11 @@ func doRequest(path, query_string string) ([]Servico, error) {
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-	}
+	defer resp.Body.Close()
 
 	var results Servicos
-	err = xml.Unmarshal(body, &results)
-
+	decode := xml.NewDecoder(resp.Body)
+	err = decode.Decode(&results)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 	}
