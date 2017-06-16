@@ -22,7 +22,7 @@ var params = Params{
 func TestCalcPrecoPrazo(t *testing.T) {
 	results, _ := CalcPrecoPrazo(params)
 
-	expected := Servico{
+	expected := &Servico{
 		Codigo:                "40010",
 		Valor:                 "0,00",
 		Prazo:                 "0",
@@ -44,7 +44,7 @@ func TestCalcPrecoPrazo(t *testing.T) {
 func TestCalcPreco(t *testing.T) {
 	results, _ := CalcPreco(params)
 
-	expected := Servico{
+	expected := &Servico{
 		Codigo:                "40010",
 		Valor:                 "0,00",
 		Prazo:                 "",
@@ -66,15 +66,15 @@ func TestCalcPreco(t *testing.T) {
 func TestCalcPrazo(t *testing.T) {
 	results, _ := CalcPrazo(params)
 
-	expected := Servico{
+	expected := &Servico{
 		Codigo:                "40010",
 		Valor:                 "",
-		Prazo:                 "2",
+		Prazo:                 "4",
 		ValorMaoPropria:       "",
 		ValorAvisoRecebimento: "",
 		ValorDeclado:          "",
 		EntregaDomiciliar:     "S",
-		EntregaSabado:         "S",
+		EntregaSabado:         "N",
 		Erro:                  "",
 		MsgErro:               "",
 	}

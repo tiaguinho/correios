@@ -7,9 +7,10 @@ import (
 	"net/http"
 )
 
+// WEBSERVICE é o link do webservice dos correios
 const WEBSERVICE string = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx"
 
-//Struct com os parametros da requisição
+// Params é a struct com os parametros da requisição
 type Params struct {
 	CodigoEmpresa    string  `url:"nCdEmpresa"`
 	Senha            string  `url:"sDsSenha"`
@@ -27,7 +28,7 @@ type Params struct {
 	AvisoRecebimento string  `url:"sCdAvisoRecebimento"`
 }
 
-//Struct com os dados do retorno de cada serviço
+// Servico e a struct com os dados do retorno de cada serviço
 type Servico struct {
 	Codigo                string `xml:"Codigo"`
 	Valor                 string `xml:"Valor"`
@@ -41,41 +42,39 @@ type Servico struct {
 	MsgErro               string `xml:"MsgErro"`
 }
 
+// Servicos guarda a response da consulta
 type Servicos struct {
-	Resultado xml.Name  `xml:"cResultado"`
-	Servico   []Servico `xml:"Servicos>cServico"`
+	Resultado xml.Name   `xml:"cResultado"`
+	Servico   []*Servico `xml:"Servicos>cServico"`
 }
 
-//Calcula o preço e o prazo de entrega do item informado
-func CalcPrecoPrazo(consulta Params) ([]Servico, error) {
+// CalcPrecoPrazo calcula o preço e o prazo de entrega do item informado
+func CalcPrecoPrazo(consulta Params) ([]*Servico, error) {
 	return doRequest("CalcPrecoPrazo", createQuery(consulta))
 }
 
-//Calcla o preço da entrega
-func CalcPreco(consulta Params) ([]Servico, error) {
+// CalcPreco calcula o preço da entrega
+func CalcPreco(consulta Params) ([]*Servico, error) {
 	return doRequest("CalcPreco", createQuery(consulta))
 }
 
-//Calcula somente o prazo de entrega
-func CalcPrazo(consulta Params) ([]Servico, error) {
+// CalcPrazo calcula somente o prazo de entrega
+func CalcPrazo(consulta Params) ([]*Servico, error) {
 	return doRequest("CalcPrazo", createQuery(consulta))
 }
 
-//Cria a query de consulta a partir da interface informada
+// createQuery cria a query de consulta a partir da interface informada
 func createQuery(consulta Params) string {
-	query_string, err := query.Values(consulta)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-	}
+	qs, _ := query.Values(consulta)
 
-	return query_string.Encode()
+	return qs.Encode()
 }
 
-//Faz a request para o webservice dos correios
-func doRequest(path, query_string string) ([]Servico, error) {
-	resp, err := http.Get(WEBSERVICE + "/" + path + "?" + query_string)
+// doRequest faz a request para o webservice dos correios
+func doRequest(path, qs string) ([]*Servico, error) {
+	resp, err := http.Get(WEBSERVICE + "/" + path + "?" + qs)
 	if err != nil {
-		fmt.Printf("Error: %v\n", err)
+		return nil, fmt.Errorf("Error: %v\n", err)
 	}
 	defer resp.Body.Close()
 
@@ -83,7 +82,7 @@ func doRequest(path, query_string string) ([]Servico, error) {
 	decode := xml.NewDecoder(resp.Body)
 	err = decode.Decode(&results)
 	if err != nil {
-		fmt.Printf("Error: %v\n", err)
+		return nil, fmt.Errorf("Error: %v\n", err)
 	}
 
 	return results.Servico, err
