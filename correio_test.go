@@ -69,7 +69,7 @@ func TestCalcPrazo(t *testing.T) {
 	expected := &Servico{
 		Codigo:                "40010",
 		Valor:                 "",
-		Prazo:                 "4",
+		Prazo:                 "5",
 		ValorMaoPropria:       "",
 		ValorAvisoRecebimento: "",
 		ValorDeclado:          "",
